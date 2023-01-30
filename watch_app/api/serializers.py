@@ -2,6 +2,28 @@ from rest_framework import serializers
 from watch_app.models import Movie
 
 
+class MovieSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Movie
+        fields = "__all__"                    # This process is shows all fields of individual object
+        #fields = ['id', 'name', 'description']  # This process is shows only 3 fields of individual object
+        #exclude = ['active']                    # It will exclude active field and shows rest of the fields
+
+
+    def validate(self, data):
+        if data[ 'name' ] == data[ 'description' ]:
+            raise serializers.ValidationError("Title and Description should be different")
+        else:
+            return data
+
+    def validate_name(self, value):  # Field level validation
+        if len(value) < 2:
+            raise serializers.ValidationError("Name is too short")
+        else:
+            return value
+
+
+"""
 def name_length(value):
     if len(value) < 2:
         raise serializers.ValidationError("Name is too Short")
@@ -28,7 +50,7 @@ class MovieSerializer(serializers.Serializer):   #
             raise serializers.ValidationError("Title and Description should be different")
         else:
             return data
-
+"""
         
 """
     def validate_name(self, value):        #Field level validation
