@@ -7,7 +7,7 @@ def name_length(value):
         raise serializers.ValidationError("Name is too Short")
 
 
-class MovieSerializer(serializers.Serializer):
+class MovieSerializer(serializers.Serializer):   #
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(validators=[name_length])
     description = serializers.CharField()
