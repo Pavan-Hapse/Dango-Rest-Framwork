@@ -1,15 +1,24 @@
 from rest_framework import serializers
-from watch_app.models import Movie
+from watch_app.models import WatchList, StreamPlatform
 
 
-class MovieSerializer(serializers.ModelSerializer):
+class StreamPlatformSerializer(serializers.Serializer):
+
     class Meta:
-        model = Movie
+        model = StreamPlatform
+        fields = "__all__"
+
+
+class WatchlistSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WatchList
         fields = "__all__"                    # This process is shows all fields of individual object
+
         #fields = ['id', 'name', 'description']  # This process is shows only 3 fields of individual object
         #exclude = ['active']                    # It will exclude active field and shows rest of the fields
 
 
+"""
     def validate(self, data):
         if data[ 'name' ] == data[ 'description' ]:
             raise serializers.ValidationError("Title and Description should be different")
@@ -21,7 +30,7 @@ class MovieSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Name is too short")
         else:
             return value
-
+"""
 
 """
 def name_length(value):
