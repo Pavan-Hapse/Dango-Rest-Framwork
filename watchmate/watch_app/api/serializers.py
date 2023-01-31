@@ -1,20 +1,34 @@
 from rest_framework import serializers
-from watch_app.models import WatchList, StreamPlatform
+from watch_app.models import WatchList, StreamPlatform,Review
 
 
-class StreamPlatformSerializer(serializers.ModelSerializer):
+class ReviewSerializer(serializers.ModelSerializer):    #We can add the reviews through this serializer
 
     class Meta:
-        model = StreamPlatform
+        model = Review
         fields = "__all__"
 
+
 class WatchListSerializer(serializers.ModelSerializer):
+    reviews = ReviewSerializer(many=True, read_only=True)
     class Meta:
         model = WatchList
         fields = "__all__"  # This process is shows all fields of individual object
 
         # fields = ['id', 'name', 'description']  # This process is shows only 3 fields of individual object
         # exclude = ['active']                    # It will exclude active field and shows rest of the fields
+
+
+class StreamPlatformSerializer(serializers.ModelSerializer):
+    # watchlist = WatchListSerializer(many=True, read_only=True)
+    watchlist = serializers.StringRelatedField(many=True)           #This method will return the name of watchlist name
+
+
+
+    class Meta:
+        model = StreamPlatform
+        fields = "__all__"
+
 
 
 
