@@ -7,8 +7,8 @@ class ReviewSerializer(serializers.ModelSerializer):  # We can add the reviews t
 
     class Meta:
         model = Review
-        # exclude = ('watchlist',)
-        fields = "__all__"
+        exclude = ('watchlist',)
+        #fields = "__all__"
 
 
 class WatchListSerializer(serializers.ModelSerializer):

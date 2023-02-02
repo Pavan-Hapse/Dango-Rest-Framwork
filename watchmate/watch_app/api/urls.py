@@ -21,10 +21,10 @@ urlpatterns = [
     # path('review', ReviewList.as_view(),name= 'review-list'),
     # path('review/<int:pk>', ReviewDetail.as_view(), name='review-detail'),
 
-    path('stream/<int:pk>/review-create', ReviewCreate.as_view(), name='stream-create'),
-    path('stream/<int:pk>/review', ReviewList.as_view(), name='review-list'),
+    path('<int:pk>/review-create', ReviewCreate.as_view(), name='stream-create'),
+    path('<int:pk>/reviews', ReviewList.as_view(), name='review-list'),
     # This is going to help us to get reviews for the particular movie
-    path('stream/review/<int:pk>', ReviewDetail.as_view(), name='review-detail'),
+    path('review/<int:pk>', ReviewDetail.as_view(), name='review-detail'),
     # This is going to help us to access indiviudal review
 
 ]

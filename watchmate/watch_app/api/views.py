@@ -9,7 +9,6 @@ from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
-
 # from rest_framework import mixins
 from watch_app.api.permissions import AdminOrReadOnly, ReviewUserOrReadOnly
 from watch_app.models import WatchList, StreamPlatform, Review
@@ -20,23 +19,35 @@ from watch_app.api.serializers import (WatchListSerializer, StreamPlatformSerial
 class ReviewCreate(generics.CreateAPIView):
     serializer_class = ReviewSerializer
 
+    def get_queryset(self):
+        return Review.objects.all()
+
     def perform_create(self, serializer):
         pk = self.kwargs.get('pk')
         watchlist = WatchList.objects.get(pk=pk)
-        serializer.save(watchList=watchlist)
 
-        # review_user = self.request.user
-        # review_queryset = Review.objects.filter(watchList=watchlist, review_user=review_user)
+        review_user = self.request.user
+        review_queryset = Review.objects.filter(watchlist=watchlist, review_user=review_user)
 
         if review_queryset.exists():
             raise ValidationError("You have already reviewed this movie")
+
+        if watchlist.number_rating == 0:
+            watchlist.avg_rating = serializer.validated_data['rating']
+        else:
+
+            watchlist.avg_rating = (watchlist.avg_rating + serializer.validated_data['rating']) / 2
+
+        watchlist.number_rating = watchlist.number_rating + 1
+        watchlist.save()
+
         serializer.save(watchlist=watchlist, review_user=review_user)
 
 
 class ReviewList(generics.ListAPIView):
     # queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [ IsAuthenticatedOrReadOnly ]
 
     def get_queryset(self):
         pk = self.kwargs[ 'pk' ]
@@ -46,7 +57,7 @@ class ReviewList(generics.ListAPIView):
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):  # This class allow us to perform get, update, and delete
     queryset = Review.objects.all()  # we can retrive all details only for individual object
     serializer_class = ReviewSerializer
-    permission_classes = [ReviewUserOrReadOnly]
+    permission_classes = [ ReviewUserOrReadOnly ]
 
 
 # class ReviewDetail(mixins.RetrieveModelMixin, generics.GenericAPIView):
