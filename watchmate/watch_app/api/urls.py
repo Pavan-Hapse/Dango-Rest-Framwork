@@ -24,7 +24,7 @@ urlpatterns = [
     path('<int:pk>/review-create /', ReviewCreate.as_view(), name='stream-create'),
     path('<int:pk>/reviews/', ReviewList.as_view(), name='review-list'),
     # This is going to help us to get reviews for the particular movie
-    path('review/>', ReviewDetail.as_view(), name='review-detail'),
+    path('review/<int:pk>/', ReviewDetail.as_view(), name='review-detail'),
     # This is going to help us to access indiviudal review
 
 ]

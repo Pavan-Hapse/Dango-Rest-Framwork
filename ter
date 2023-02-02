@@ -1,0 +1,9 @@
+[33mbf13954[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m I have write some code related to BasicAuthentication
+[33mf2d5bc6[m Adding the total number of rating for particular movie and find the average count
+[33m6a7cd15[m Here i am adding Custom permission for the user
+[33me5dcd07[m Authentication for user
+[33m268cda6[m Created user from backend
+[33m8c3423b[m I have perfomed some mixins(GenericView) classed and method here
+[33m4e03378[m Add Review
+[33m8595efa[m Streaming files added
+[33m9a1e472[m Drf
