@@ -3,14 +3,14 @@ from django.dispatch import receiver
 
 @receiver(user_logged_in)
 def log_user_login(sender, request, user, **kwargs):
-    print("User logged in")
+    print('user {} log in'.format(user.username))
 
 
 @receiver(user_login_failed)
 def log_user_login_failed(sender, credential, user, **kwargs):
-    print("User Failed to log in")
+    print('user {} failed to log in'.format(user.username))
 
 
 @receiver(user_logged_out)
 def log_user_logout(sender, request, user, **kwargs):
-    print("User logged out")
+    print('user {} logged out'.format(user.username))
