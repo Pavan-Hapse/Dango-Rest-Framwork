@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 class StreamPlatform(models.Model):
     name = models.CharField(max_length=30)
     about = models.CharField(max_length=150)
-    website = models.CharField(max_length=100)
+    website = models.URLField(max_length=100)
 
     def __str__(self):
         return self.name
@@ -38,4 +38,4 @@ class Review(models.Model):
     update = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.rating) + "|" + self.watchlist.title
+        return str(self.rating) + "|" + self.watchlist.title + " | " + str(self.review_user)
